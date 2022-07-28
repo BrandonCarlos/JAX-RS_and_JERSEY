@@ -30,7 +30,7 @@ public class CarrinhoDAO {
 	}
 	
 	public Carrinho busca(Long id) {
-		return banco.get(id);
+		return banco.get(id); 
 	}
 	
 	public Carrinho remove(long id) {

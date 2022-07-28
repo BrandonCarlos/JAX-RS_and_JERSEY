@@ -15,12 +15,16 @@ public class Produto {
 		this.quantidade = quantidade;
 	}
 
-	public double getPreco() {
+	public double getPreco() { 
 		return preco;
 	}
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNome() {

@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 
 public class Carrinho {
@@ -69,13 +64,17 @@ public class Carrinho {
 			Produto p = (Produto) iterator.next();
 			if(p.getId() == produto.getId()) {
 				p.setQuantidade(produto.getQuantidade());
-				return;
+				return; 
 			}
 		}
 	}
 	
 	public List<Produto> getProdutos() {
 		return produtos;
+	}
+
+	public String toXML() {
+		return new XStream().toXML(this);//convertendo este próprio OBJETO para XML e retornando em formato STRING
 	}
 
 }
