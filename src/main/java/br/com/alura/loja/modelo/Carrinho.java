@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 
 public class Carrinho {
@@ -75,6 +76,10 @@ public class Carrinho {
 
 	public String toXML() {
 		return new XStream().toXML(this);//convertendo este próprio OBJETO para XML e retornando em formato STRING
+	}
+
+	public String toJSON() {//método para converter para JSON
+		return new Gson().toJson(this);//this é o elemento que solicitou este método
 	}
 
 }
