@@ -42,4 +42,10 @@ public class Produto {
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
+	
+	public void remove(long id) {
+		if(this.id == id) {
+			this.remove(id);
+		}
+	}
 }

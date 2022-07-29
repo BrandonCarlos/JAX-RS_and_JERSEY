@@ -1,16 +1,23 @@
 package br.com.alura.loja.resource;
 
+import java.net.URI;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.thoughtworks.xstream.XStream;
 
 import br.com.alura.loja.dao.CarrinhoDAO;
 import br.com.alura.loja.modelo.Carrinho;
+import br.com.alura.loja.modelo.Produto;
 
 //Todo Resource do JAX-RS vai ser anotado básicamente com o @Path() <- vamos dizer qual a URI que vou acessar no "Servidor"
 
@@ -28,12 +35,22 @@ public class CarrinhoResource {
 	}
 	
 	@POST //o path aqui continuará sendo /carrinhos só que agora para o método POST
-	@Produces(MediaType.APPLICATION_XML)//no caso eu vou ENVIAR XML para meu servidor
-	public String adicionaNoServidor(String conteudo) {
+	@Consumes(MediaType.APPLICATION_XML)//no caso eu vou ENVIAR XML para meu servidor
+	public Response adicionaNoServidor(String conteudo) {
 		//Aqui no Codigo é sempre o SERVIDOR, então eu como SERVIDOR quero receber esses dados do usuário e cadastrar no meu banco de dados
 		Carrinho carrinho = (Carrinho)new XStream().fromXML(conteudo);//pegando o conteudo que o usuario nos enviou e transformando em XML
 		new CarrinhoDAO().adiciona(carrinho);//adicionando o conteudo do usuario que ele enviou dentro do banco de dados
-		return "<status>Você enviou XML para o servidor, Sucesso</status>";//conteudo já guardado dentro do banco de dados emitimos uma mensagem de sucesso
+		URI uri = URI.create("/carrinhos/" + carrinho.getId());//ex: /carrinhos/5
+		return Response.created(uri).build();//.created() mostrando que foi criado com sucesso e mostrando a URL em que foi criada
+		//assim o usuario pode acessar essa URL posteriormente, com o .build() vai retornar um "Response", e assim estamos devolvendo em STATUS CODE
+		//no caso .build() devolve a URI Localização onde esse recurso foi criado
 	}
 	
+	@Path("/{id}/produtos/{produtoId}")//localhost:8080/carrinhos/45/produtos/456
+	@DELETE
+	public Response removeProduto(@PathParam("id") long id, @PathParam("produtoId") long produtoId) {//ex: id = 45, produtoId = 456
+		Carrinho carrinho = new CarrinhoDAO().busca(id);//encontrei o carrinho com id 1
+		carrinho.remove(produtoId);
+		return Response.ok().build();//retornando o CODE 200 - Success
+	}
 }

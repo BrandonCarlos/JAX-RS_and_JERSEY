@@ -46,7 +46,7 @@ public class Carrinho {
 		return id;
 	}
 	
-	public void remove(long id) {
+	public void remove(long id) {//remover o produto com se o IdDoProduto == idDoUsuario
 		for (Iterator iterator = produtos.iterator(); iterator.hasNext();) {
 			Produto produto = (Produto) iterator.next();
 			if(produto.getId() == id) {
