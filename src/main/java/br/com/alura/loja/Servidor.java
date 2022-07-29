@@ -33,7 +33,7 @@ public class Servidor {
 		static HttpServer inicializaServidor() {//removemos o "private" para poder utilizar lá no meu método dentro da class ClientTest.java
 		//Precisamos passar a configuração dos meus Recursos, falar quais são as minhas classes JAX-RS
 		ResourceConfig config = new ResourceConfig().packages("br.com.alura.loja");//Tudo que tiver dentro de "br.com.alura.loja" e for de JAX-RS pode usar pro meu servidor
-		URI uri = URI.create("http://localhost:8085");
+		URI uri = URI.create("http://localhost:8080");
 		HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, config);//Servidor criado, agora podemos acessar ex: localhost:8080/carrinho
 		return server;
 	}
