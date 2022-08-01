@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.client.ClientConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,8 @@ public class ClienteTest {
 	@Before //Antes de qualquer @Test, executa este método
 	public void startaServidor() {
 		server = Servidor.inicializaServidor();//está retornando para a váriavel "server" o servidor
-		this.client = ClientBuilder.newClient();
+		ClientConfig config = new ClientConfig();
+		this.client = ClientBuilder.newClient(config);
 		this.target = client.target("http://localhost:8080");
 	}
 	
